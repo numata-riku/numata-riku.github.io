@@ -1,37 +1,42 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <title>Get Group ID</title>
-    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
-  </head>
+<head>
+  <meta charset="utf-8">
+  <title>Group ID Checker</title>
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+</head>
+<body>
+  <h1>グループID取得テスト</h1>
+  <p id="status">初期化中...</p>
+  <p id="result"></p>
 
-  <body>
-    <h2>グループIDを取得中...</h2>
-    <div id="result"></div>
+  <script>
+    const LIFF_ID = "2008514849-x51Z9bBA";
 
-    <script>
-      // ★ あなたの LIFF ID を設定
-      const LIFF_ID = "2008514849-x51Z9bBA";
-
-      async function main() {
+    async function main() {
+      try {
         await liff.init({ liffId: LIFF_ID });
+        document.getElementById("status").textContent = "LIFF 初期化成功";
 
         const ctx = liff.getContext();
-        console.log(ctx);
+        document.getElementById("result").textContent =
+          "現在のコンテキスト：" + ctx.type;
 
-        if (ctx.type !== "group") {
-          document.getElementById("result").innerHTML =
-            "⚠️ グループトークから開いてください。<br>現在のコンテキスト：" + ctx.type;
-          return;
+        if (ctx.type === "group") {
+          document.getElementById("result").textContent +=
+            "\nグループID：" + ctx.groupId;
+        } else {
+          document.getElementById("result").textContent +=
+            "\n⚠️ グループトークから開いてください。";
         }
-
-        const groupId = ctx.groupId;
-        document.getElementById("result").innerHTML =
-          "✅ <b>Group ID:</b><br>" + groupId;
+      } catch (err) {
+        document.getElementById("status").textContent =
+          "エラー：" + err;
+        console.error(err);
       }
+    }
 
-      main();
-    </script>
-  </body>
+    main();
+  </script>
+</body>
 </html>
