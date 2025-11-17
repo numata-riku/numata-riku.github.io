@@ -7,30 +7,31 @@
   </head>
 
   <body>
-    <h2>グループID取得中...</h2>
+    <h2>グループIDを取得中...</h2>
     <div id="result"></div>
 
     <script>
+      // ★ あなたの LIFF ID を設定
       const LIFF_ID = "2008514849-x51Z9bBA";
 
       async function main() {
         await liff.init({ liffId: LIFF_ID });
+
         const ctx = liff.getContext();
+        console.log(ctx);
 
         if (ctx.type !== "group") {
           document.getElementById("result").innerHTML =
-            "これはグループトークではありません。";
+            "⚠️ グループトークから開いてください。<br>現在のコンテキスト：" + ctx.type;
           return;
         }
 
         const groupId = ctx.groupId;
-
         document.getElementById("result").innerHTML =
-          "Group ID:<br><b>" + groupId + "</b>";
+          "✅ <b>Group ID:</b><br>" + groupId;
       }
 
       main();
     </script>
   </body>
 </html>
-
