@@ -1,35 +1,35 @@
 <!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>〇〇のウェブサイト</title> <link rel="stylesheet" href="style.css"> </head>
-<body>
-    <header>
-        <h1>ようこそ！</h1>
-        <p>これは私の自己紹介サイトです。</p>
-    </header>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Get Group ID</title>
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+  </head>
 
-    <main>
-        <section>
-            <h2>自己紹介</h2>
-            <img src="profile.jpg" alt="プロフィール写真" width="200"> <p>こんにちは、〇〇です。趣味は読書と旅行です。このサイトでは、私の好きなものや日々の出来事を共有していきたいと思います。</p>
-        </section>
+  <body>
+    <h2>グループID取得中...</h2>
+    <div id="result"></div>
 
-        <section>
-            <h2>好きなこと</h2>
-            <ul>
-                <li>コーヒーを飲むこと</li>
-                <li>新しい場所を訪れること</li>
-                <li>音楽を聴くこと</li>
-            </ul>
-        </section>
-    </main>
+    <script>
+      const LIFF_ID = "YOUR_LIFF_ID";
 
-    <footer>
-        <p>&copy; 2025 〇〇. All rights reserved.</p>
-        <p><a href="mailto:your_email@example.com">問い合わせ</a></p>
-    </footer>
-</body>
+      async function main() {
+        await liff.init({ liffId: LIFF_ID });
+        const ctx = liff.getContext();
+
+        if (ctx.type !== "group") {
+          document.getElementById("result").innerHTML =
+            "これはグループトークではありません。";
+          return;
+        }
+
+        const groupId = ctx.groupId;
+
+        document.getElementById("result").innerHTML =
+          "Group ID:<br><b>" + groupId + "</b>";
+      }
+
+      main();
+    </script>
+  </body>
 </html>
-
